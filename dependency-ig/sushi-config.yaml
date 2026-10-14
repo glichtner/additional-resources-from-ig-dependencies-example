@@ -1,0 +1,6 @@
+canonical: http://example.org/fhir/additional-resource
+name: AdditionalResourceDefinition
+status: draft
+version: 0.1.0
+fhirVersion: 6.0.0-snapshot1
+FSHOnly: true

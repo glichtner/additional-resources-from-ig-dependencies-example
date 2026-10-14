@@ -1,0 +1,15 @@
+# Generated FHIR resources and Publisher build files
+**/fsh-generated/
+**/input-cache/
+**/output/
+**/temp/
+**/template/
+**/translations/
+**/Requirements-fromNarrative.json
+
+# Local dependency package, run log and Publisher binary
+/.build/
+*.jar
+
+.DS_Store
+Thumbs.db

@@ -1,0 +1,20 @@
+id: example.additional-resource-consumer
+canonical: http://example.org/fhir/additional-resource-consumer
+name: AdditionalResourceConsumer
+title: Additional Resource Dependency Example
+status: draft
+version: 0.1.0
+fhirVersion: 6.0.0-snapshot1
+copyrightYear: 2026
+releaseLabel: ci-build
+license: CC0-1.0
+publisher:
+  name: Example Publisher
+  url: http://example.org
+dependencies:
+  example.additional-resource:
+    version: 0.1.0
+    uri: http://example.org/fhir/additional-resource/ImplementationGuide/example.additional-resource
+parameters:
+  version-comparison: n/a
+pages: {}
