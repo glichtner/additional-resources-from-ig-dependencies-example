@@ -7,7 +7,7 @@
 **/translations/
 **/Requirements-fromNarrative.json
 
-# Local dependency package, run log and Publisher binary
+# Run logs and Publisher binary
 /.build/
 *.jar
 

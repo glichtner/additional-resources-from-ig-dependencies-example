@@ -14,7 +14,7 @@ with `label = "Example record"`. It has no local resource definition or
 
 ## Run
 
-Requirements: Bash, Java 17+, Node.js, SUSHI (tested with 3.20.1), and `tar`.
+Requirements: Bash, Java 17+, SUSHI (tested with 3.20.1), and Ruby/Jekyll.
 Both projects use FHIR **6.0.0-snapshot1**. Standard FHIR packages and the template
 are downloaded on the first run if they are not cached.
 
@@ -32,17 +32,18 @@ An explicit JAR path can be absolute or relative to the current working director
 
 The script:
 
-1. Runs SUSHI on `dependency-ig`, including snapshot generation.
-2. Packages the resource and installs the unpublished
-   `example.additional-resource#0.1.0` dependency in `~/.fhir/packages` for SUSHI.
-3. Runs SUSHI on `consumer-ig` and removes its empty generated table of contents.
-4. Runs the Publisher on the consuming IG with the local dependency package.
+1. Runs SUSHI on `dependency-ig`.
+2. Runs the Publisher on `dependency-ig`, generating snapshots and the package.
+   The Publisher automatically installs it as `example.additional-resource#dev`
+   in the local FHIR package cache.
+3. Runs SUSHI on `consumer-ig`, which declares that `dev` dependency.
+4. Runs the Publisher on `consumer-ig`, where the failure occurs.
 
-The dependency is packaged directly; it needs no separate Publisher website build.
-The consumer has no website pages. Removing SUSHI's empty page tree avoids an
-unrelated Publisher template error when HTML generation is disabled.
-The final command disables HTML generation, validation and terminology-server
-use. Resource loading still runs, which is where the error occurs.
+Both IGs use the normal Publisher build. `-no-sushi` avoids rerunning SUSHI;
+`-tx n/a` disables terminology-server use. `-validation-off` skips FHIR
+validation to isolate the resource-loading failure. Snapshot generation,
+website generation and package generation still run. The package is built and cached by
+the Publisher without manual packaging or editing of generated FHIR JSON.
 Generated resources, packages, logs, downloaded templates and JARs are ignored by Git.
 
 ## Expected failure
@@ -57,7 +58,8 @@ Unknown.Unrecognised resource type 'AdditionalRecord' (in property 'resourceType
 The Publisher loads the definition but does not register it as an additional
 resource because its URL is in the FHIR namespace. It then passes the instance
 to the generated FHIR resource parser, which has no built-in `AdditionalRecord`
-type. The log is saved in `.build/publisher.log`.
+type. Logs are saved in `.build/dependency-publisher.log` and
+`.build/consumer-publisher.log`.
 
 With the additional-resource registration fix, resource loading completes and
 the instance retains its resource type and label. A fixed Publisher may therefore
@@ -75,12 +77,16 @@ README.md
 reproduce.sh
 dependency-ig/
   sushi-config.yaml
+  ig.ini
+  input/ignoreWarnings.txt
   input/fsh/additional-record.fsh
+  input/pagecontent/index.md
 consumer-ig/
   sushi-config.yaml
   ig.ini
   input/ignoreWarnings.txt
   input/fsh/example-record.fsh
+  input/pagecontent/index.md
 ```
 
 `ignoreWarnings.txt` contains only the required Publisher format header; no

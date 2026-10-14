@@ -13,8 +13,13 @@ publisher:
   url: http://example.org
 dependencies:
   example.additional-resource:
-    version: 0.1.0
+    version: dev
     uri: http://example.org/fhir/additional-resource/ImplementationGuide/example.additional-resource
 parameters:
   version-comparison: n/a
-pages: {}
+pages:
+  index.md:
+    title: Consumer IG
+menu:
+  Home: index.html
+  Artifacts: artifacts.html

@@ -1,6 +1,22 @@
+id: example.additional-resource
 canonical: http://example.org/fhir/additional-resource
 name: AdditionalResourceDefinition
+title: Additional Resource Definition
 status: draft
 version: 0.1.0
 fhirVersion: 6.0.0-snapshot1
-FSHOnly: true
+copyrightYear: 2026
+releaseLabel: ci-build
+license: CC0-1.0
+publisher:
+  name: Example Publisher
+  url: http://example.org
+parameters:
+  version-comparison: n/a
+  special-url: http://hl7.org/fhir/StructureDefinition/AdditionalRecord
+pages:
+  index.md:
+    title: Dependency IG
+menu:
+  Home: index.html
+  Artifacts: artifacts.html
